@@ -105,7 +105,7 @@ $wf_param = {                                                                   
                 {
                         '0' => sub
                         {
-                                print "This activity '0' is under construction...\n";
+                                print "The activity number '0' is under construction...\n";
                                 return {};
                         },
                         '1'  => sub
@@ -121,7 +121,7 @@ $wf_param = {                                                                   
                         },
                         '8' => sub
                         {
-                                print "This activity '8' is under construction...\n";
+                                print "The activity number '8' is under construction...\n";
                                 return {};
                         },
                         '9' => sub
@@ -131,12 +131,12 @@ $wf_param = {                                                                   
                         '10' => sub
                         {
                                 print "Subprocess \"Checking Credit\" reached.\n";
-                                print "This activity '10' is under construction...\n";
+                                print "The activity number '10' is under construction...\n";
                                 return {};
                         },
                         '11' => sub
                         {
-                                print "This activity '11' is under construction...\n";
+                                print "The activity number '11' is under construction...\n";
                                 return {};
                         },
                         '12' => sub
@@ -161,7 +161,7 @@ $wf_param = {                                                                   
                         },
                         '56' => sub
                         {
-                                print "This activity '56' is under construction...\n";
+                                print "The activity number '56' is under construction...\n";
                                 return {};
                         },
                 },
@@ -189,7 +189,7 @@ $wf_param = {                                                                   
                 {
                         '0' => sub
                         {
-                                print "This activity is under construction...\n";
+                                print "The activity number is under construction...\n";
                                 return {};
                         },
                         '1'  => sub
@@ -222,7 +222,7 @@ $wf_param = {                                                                   
                 {
                         '0' => sub
                         {
-                                print "This activity is under construction...\n";
+                                print "The activity number is under construction...\n";
                                 return {};
                         },
                         '1'  => sub
@@ -240,7 +240,7 @@ $wf_param = {                                                                   
 ######### Finished definition, starting workflow engine #########################
 print "The starting ativity ID is $init_act_id->{'EOrder'}->[0]\n\n";
 my $out = $wf->{'EOrder'}->start_workflow($wfp_id,$wf_param,$init_act_id,'EOrder');
-ok($out, "Bravo!");
+ok($out, "end");
 
 sub init2dest
 {

@@ -2,7 +2,7 @@ package Workflow::Wfmc;
 
 use 5.008003;
 use strict;
-#use warnings;
+use warnings;
 use Data::Dumper;
 use XML::Simple qw(XMLin XMLout);
 
@@ -28,7 +28,7 @@ our @EXPORT = qw(
 
 );
 
-our $VERSION = '0.01';
+our $VERSION = '0.01a';
 # v0.2: methods take in with non hash params
 # v0.3: methods take in with hash params
 # v0.4: routing and Transition Restriction support
@@ -282,146 +282,6 @@ sub logger           # also a initializer ;-)
 }
 
 
-sub zip64
-{
-        use MIME::Base64;
-        use Compress::Zlib;
-        my $invocant = shift;
-        $invocant->logger->debug("Entering subroutine zip64 of $PACKAGE");
-        my ($string,$zip,$encoded);
-        if(@_){
-                $string = shift;
-        }
-        else
-        {
-                $invocant->logger->error("Lack of input string in subroutine zip64 of $PACKAGE");
-                return;
-        }
-        $zip = Compress::Zlib::memGzip($string) ;
-        $encoded = encode_base64($zip);
-        $invocant->logger->debug("Leaving subroutine zip64 of $PACKAGE");
-        return $encoded;
-}
-
-sub unzip64
-{
-        use MIME::Base64;
-        use Compress::Zlib;
-        my $invocant = shift;
-        $invocant->logger->debug("Entering subroutine unzip64 of $PACKAGE");
-        my ($string,$unzip,$decoded);
-        if(@_){
-                $string = shift;
-        }
-        else
-        {
-                $invocant->logger->error("Lack of input string in subroutine unzip64 of $PACKAGE");
-                return;
-        }
-        $decoded = decode_base64($string);
-        $unzip = Compress::Zlib::memGunzip($decoded) ;
-        $invocant->logger->debug("Leaving subroutine unzip64 of $PACKAGE");
-        return $unzip;
-}
-
-sub digest_md5_base64
-{
-        use Digest::MD5 qw(md5_base64);
-        my $invocant = shift;
-        my ($string);
-        $invocant->logger->debug("Entering subroutine digest_md5_base64 of $PACKAGE");
-        if(@_){
-                $string = shift;
-        }
-        else
-        {
-                $invocant->logger->error("Lack of input string in subroutine digest_md5_base64 of $PACKAGE");
-                return;
-        }
-        $invocant->logger->debug("Leaving subroutine digest_md5_base64 of $PACKAGE");
-        return  md5_base64($string);
-}
-
-sub digest         # same as digest_md5_base64
-{
-        use Digest::MD5 qw(md5_base64);
-        my $invocant = shift;
-        my ($string);
-        $invocant->logger->debug("Entering subroutine digest of $PACKAGE");
-        if(@_){
-                $string = shift;
-        }
-        else
-        {
-                $invocant->logger->error("Lack of input string in subroutine digest of $PACKAGE");
-                return;
-        }
-        $invocant->logger->debug("Leaving subroutine digest of $PACKAGE");
-        return  md5_base64($string);
-}
-
-sub check_xml2perl
-{
-        use XML::Dumper;
-        my $invocant = shift;
-        $invocant->logger->debug("Entering subroutine check_xml2perl of $PACKAGE");
-        my ($xp,$xml,$perl);
-        my $perltxt = "my \$perl = [\n";
-        my $dump = new XML::Dumper;
-        if(@_)
-        {
-                $xml = shift;
-        }
-        else
-        {
-                $invocant->logger->error("Lack of input xml2perl in subroutine check_xml2perl of $PACKAGE");
-                return;
-        }
-        $perl = $dump->xml2pl( $xml );       # dumper accept no_ltgt
-        my $i = 0;
-        while(1)
-        {
-                if(defined  $perl->[$i])
-                {
-                        $perltxt .= "\t\{\n";
-                                $perltxt .= "\t\tcheck          => q|".$perl->[$i]->{check}.     "|\,\n";
-                                $perltxt .= "\t\tissuer         => q|".$perl->[$i]->{issuer}.    "|\,\n";
-                                $perltxt .= "\t\taction         => q|".$perl->[$i]->{action}.    "|\,\n";
-                                $perltxt .= "\t\ttimestamp      => q|".$perl->[$i]->{timestamp}. "|\,\n";
-                                $perltxt .= "\t\}\,\n";
-                        $i++;
-                }
-                else
-                {
-                        $perltxt .= "\]\;\n" ;
-                        last;
-                }
-        }
-        $invocant->logger->debug("Leaving subroutine check_xml2perl of $PACKAGE");
-        return  $perltxt;
-}
-
-sub parser
-{
-        use XML::Parser;
-        my $invocant = shift;
-        $invocant->logger->debug("Entering subroutine parser of $PACKAGE");
-        my $p = new XML::Parser();
-        my ($xml_string);
-        if(@_)
-        {
-                $xml_string = shift;
-        }
-        else
-        {
-                $invocant->logger->error("Lack of input  in subroutine parser of $PACKAGE");
-                return;
-        }
-        $invocant->logger->debug("Leaving subroutine parser of $PACKAGE");
-        return  $p->parse($xml_string);
-}
-
-
 sub load_conf
 {
         use XML::XPath;
@@ -497,8 +357,10 @@ sub get_perl_by_method{ # only accept strings as import data
         #print $_,"\n" foreach(@param);exit;
         $invocant->logger->debug("Entering subroutine parser of $PACKAGE");
         my $perl = "use $cls\;\n";
-        $perl .= $cls.'::';
-        $perl .= "$mtd({";
+        if(defined $mtd){
+	        $perl .= $cls.'::';
+	        $perl .= $mtd.'({';
+        }
         foreach(@$param){
                 $perl .= $_;
                 $perl .= q{,};
@@ -543,10 +405,13 @@ sub get_perl_by_act_id{ # Return PERL code to call for a given Activity ID
         my $params = $act_perl->{'Implementation'}->{'Tool'}->{'ActualParameters'}->{'ActualParameter'};
         my (@p,@params);
         eval{@p = @$params;};
+        my $p;
         if($@){
-                eval{$invocant->{DataFields}->{$params} =~ s/'/\\'/g;};
-                my $p =qq|'$params'=>'$invocant->{DataFields}->{$params}'|;
-                push @params,$p;
+                if (defined $params){
+	                $invocant->{DataFields}->{$params} =~ s/'/\\'/g ;
+	                $p =qq|'$params'=>'$invocant->{DataFields}->{$params}'|;
+	                push @params,$p;
+                }
         }else{
                 foreach(@p){
                         $invocant->{DataFields}->{$_} =~ s/'/\\'/g;
@@ -583,13 +448,15 @@ sub get_conditions # Produces a hash from the Transaction (identified by 'From')
                         foreach my $op (@operators){
                                 my @cond = split($op,$cond);
                                 $cond[0] =~ s/\s//g;                                  # paramter name without white spaces
-                                eval{$cond[1] = $1 if($cond[1] =~ m/^\s*\"(.*)\"\s*$/g);};
-                                push @cond_hash, {
-                                        'param' => $cond[0],
-                                        'value' => $cond[1],                          # undef if == is not in condition
-                                        'dest'  => $dest,
-                                        'op'    => $op,
-                                }if($cond[1]);
+				if(defined $cond[1]){
+	                                $cond[1] = $1 if($cond[1] =~ m/^\s*\"(.*)\"\s*$/g);
+	                                push @cond_hash, {
+	                                        'param' => $cond[0],
+	                                        'value' => $cond[1],                  # undef if == is not in condition
+	                                        'dest'  => $dest,
+	                                        'op'    => $op,
+	                                };
+                                };
                         }
                 }else{ # unconditioned dest
                         push @cond_hash, {

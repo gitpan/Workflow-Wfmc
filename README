@@ -1,16 +1,62 @@
-Workflow-Wfmc version 0.01
+Workflow-Wfmc version 0.01a
 ==========================
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+EXAMPLE 1: PURCHASE ORDER
 
-A README file is required for CPAN modules since CPAN extracts the
-README file from a module distribution so that people browsing the
-archive can use it get an idea of the modules uses. It is usually a
-good idea to provide version information here so that people can
-decide whether fixes for the module are worth downloading.
+C:\kai\PERL\Workflow-Wfmc-0.01>perl t\Workflow-Wfmc.t -t "PO"
+1..2
+ok 1 - use Workflow::Wfmc;
+The starting ativity ID is 1
+
+Implementation step
+Tue Jul 12 08:40:56 2005: Entering sub checkData
+Tue Jul 12 08:40:56 2005: In sub checkData: validating order data...
+Tue Jul 12 08:40:56 2005: Leaving sub checkData
+Tue Jul 12 08:40:56 2005: Leaving sub checkData: 'Valid Data'
+The next activity ID is 12
+
+Route step
+The next activity ID is 41
+
+Implementation step
+Tue Jul 12 08:40:56 2005: Entering sub checkVendor: account no. 10100126 wishes
+to spend 200 EURO
+Tue Jul 12 08:40:56 2005: Leaving sub checkVendor: Accept
+The next activity ID is 32
+
+Implementation step
+Tue Jul 12 08:40:56 2005: Entering sub enterOrder: order no. EP100
+Tue Jul 12 08:40:56 2005: In sub enterOrder: order no. EP100 processed
+Tue Jul 12 08:40:56 2005: Leaving sub enterOrder: order no. EP100
+The next activity ID is 9
+
+Route step
+The next activity IDs are 8 56 11
+
+This activity '56' is under construction...
+ok 2 - Bravo!
+
+EXAMPLE 2: CREDIT
+
+C:\kai\PERL\Workflow-Wfmc-0.01>perl t\Workflow-Wfmc.t -t "Credit"
+1..2
+ok 1 - use Workflow::Wfmc;
+The starting ativity ID is 1
+
+Implementation step
+Tue Jul 12 08:41:21 2005: Entering sub checkData
+Tue Jul 12 08:41:21 2005: In sub checkData: validating order data...
+Tue Jul 12 08:41:21 2005: Leaving sub checkData
+Tue Jul 12 08:41:21 2005: Leaving sub checkData: 'Valid Data'
+The next activity ID is 12
+
+Route step
+The next activity ID is 10
+
+Subprocess "Checking Credit" reached.
+This activity '10' is under construction...
+ok 2 - Bravo!
+
 
 INSTALLATION
 
@@ -25,13 +71,17 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-  blah blah blah
+  Data::Dumper
+  ML::Simple
+  XML::XPath
+  XML::Parser
+
 
 COPYRIGHT AND LICENCE
 
 Put the correct copyright and licence information here.
 
-Copyright (C) 2005 by A. U. Thor
+Copyright (C) 2005 by Kai Li. All rights reserved.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.3 or,
