@@ -28,7 +28,7 @@ our @EXPORT = qw(
 
 );
 
-our $VERSION = '0.01a';
+our $VERSION = '0.01b';
 # v0.2: methods take in with non hash params
 # v0.3: methods take in with hash params
 # v0.4: routing and Transition Restriction support
