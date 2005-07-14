@@ -1,4 +1,4 @@
-Workflow-Wfmc version 0.01a
+Workflow-Wfmc version 0.01c
 ==========================
 
 EXAMPLE 1: PURCHASE ORDER
@@ -55,7 +55,7 @@ The next activity ID is 10
 
 Subprocess "Checking Credit" reached.
 This activity '10' is under construction...
-ok 2 - Bravo!
+ok 2 - end
 
 
 INSTALLATION

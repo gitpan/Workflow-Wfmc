@@ -1,7 +1,7 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         Workflow-Wfmc
-version:      0.01b
+version:      0.01c
 version_from: lib/Workflow/Wfmc.pm
 installdirs:  site
 requires:
