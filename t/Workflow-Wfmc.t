@@ -238,7 +238,7 @@ $wf_param = {                                                                   
 
 
 ######### Finished definition, starting workflow engine #########################
-print "The starting ativity ID is $init_act_id->{'EOrder'}->[0]\n\n";
+print "The starting activity ID is $init_act_id->{'EOrder'}->[0]\n\n";
 my $out = $wf->{'EOrder'}->start_workflow($wfp_id,$wf_param,$init_act_id,'EOrder');
 ok($out, "end");
 

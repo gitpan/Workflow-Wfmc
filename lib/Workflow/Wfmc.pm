@@ -28,11 +28,8 @@ our @EXPORT = qw(
 
 );
 
-our $VERSION = '0.01c';
-# v0.2: methods take in with non hash params
-# v0.3: methods take in with hash params
-# v0.4: routing and Transition Restriction support
-# v0.5: stable without support to "Subprocess" and "EXCEPTION"
+our $VERSION = '0.01d';
+
 my $PACKAGE = __PACKAGE__;
 our @LOGOPT;
 my %LOGFLAG = (
@@ -727,11 +724,10 @@ sub get_wfpname_by_id
 }
 1;
 __END__
-# Below is stub documentation for your module. You'd better edit it!
 
 =head1 NAME
 
-Workflow::Wfmc - A lightweight Workflow Engine in PERL based on Wfmc 2.0
+Workflow::Wfmc - A lightweight Workflow Engine in PERL based on XPDL 2.0
 
 =head1 SYNOPSIS
 
@@ -740,15 +736,12 @@ Workflow::Wfmc - A lightweight Workflow Engine in PERL based on Wfmc 2.0
 
 =head1 DESCRIPTION
 
-This is an partial implementation of Wfmc 2.0 (Workflow Management Coalition, http://www.wfmc.org). It supports input and output parameters for a workflow, routing, call-back functions and conditions. It does not support sub-process at the moment. You can run 'perl t/Workflow-Wfmc.t -t "PO"' or 'perl t/Workflow-Wfmc.t -t "Credit"' to see how it works. The workflow configuration file "workflow.xml" can be created with some visual tools. The sample package "Workflow::Wfmc::Test::Order" contains dummy call-back functions. As a matter of fact, the executable program itself could be generated from the workflow configuration file, which is something that the author would like to complete in a successive release. To test it, you should prepare your workflow configuration file and the packages that contain cal-back functions first and then generate an executable program following the example of t/Workflow-Wfmc.t.
+This is an partial implementation of XML Process Definition Language (XPDL) Version 2 (see Web page of Workflow Management Coalition - http://www.wfmc.org). It supports input and output parameters for a workflow, routing, call-back functions and conditions. It does not support sub-process at the moment. You can run 'perl t/Workflow-Wfmc.t -t "PO"' or 'perl t/Workflow-Wfmc.t -t "Credit"' to see how it works. The workflow configuration file "workflow.xml" can be created with some visual tools. The sample package "Workflow::Wfmc::Test::Order" contains dummy call-back functions. As a matter of fact, the executable program itself could be generated from the workflow configuration file, which is something that the author would like to complete in a successive release. To test it, you should prepare your workflow configuration file and the packages that contain call-back functions first and then generate an executable program following the example of t/Workflow-Wfmc.t.
 
 =head2 EXPORT
 
 None by default.
 
-
-
-=head1 SEE ALSO
 
 
 =head1 AUTHOR

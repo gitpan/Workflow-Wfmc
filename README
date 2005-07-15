@@ -1,12 +1,95 @@
 Workflow-Wfmc version 0.01c
 ==========================
 
+ABOUT WFMC
+
+The Workflow Management Coalition, founded in August 1993, is a non-profit, international organization of workflow vendors, users, analysts and university/research groups. 
+
+The Coalition's mission is to promote and develop the use of workflow through the establishment of standards for software terminology, interoperability and connectivity between workflow products. Consisting of over 300 members worldwide, the Coalition is the primary standards body for this significant software market.
+
+Web site: http://www.wfmc.org/
+
+
+MODULE BASIS
+
+This module is a partial implementation of the XML Process Definition Language (XPDL) Version 2 draft:
+
+Workflow Management Coalition Workflow Standard
+
+Process Definition Interface -- XML Process Definition Language
+
+Document Number WFMC-TC-1025
+Document Status - 2 Draft
+
+May 08, 2005
+Version 1.04 - Draft
+
+
+WFMC FULL MEMBERS
+ 
+A Adobe (new)
+ADVANTYS (new)
+AGiLiENCE 
+Agilent Technologies
+AIIM International 
+B BancTec/Plexus
+BEA Systems 
+BOC GmbH
+BPM Korea Software Industry Association 
+C   
+D DST Systems Inc. 
+E  
+ 
+F FileNet Corporation
+FISERV Solutions Inc  
+Flowring Technology Co. Ltd. 
+FrameWork
+Fujitsu Software Corporation 
+G Global 360 
+H HandySoft Corp.
+Hitachi Ltd Software Division
+Hyland Software Inc. (new) 
+I IBM
+ILOG 
+Insiel S.p.A.
+IPI Scrittura  
+J   
+K Kaisha-Tec  
+L Lucent Technologies 
+M Mega International
+Meta Software MS S.A 
+N NEC Soft Ltd  
+O Oracle  
+P Parametric Technology  
+Pegasystems Inc. 
+R   
+S SAP AG
+Savvion Inc 
+Software Daten Service GmbH
+SourceCode Technology Holdings (new)
+Stratos 
+Sun Microsystems 
+T Teamplate Inc
+Telcordia Technologies (Formerly Bellcore)
+TIBCO Corporation (now including Staffware)
+Toshiba Corp  
+U  
+V Vignette Corporation 
+Vitria Technology Inc 
+Vizyon Net Arastirma Gelistirme (new) 
+W W4 
+webMethods 
+WorkDynamics Technologies Inc
+Workflow & Groupware Strategies 
+X 
+
+
 EXAMPLE 1: PURCHASE ORDER
 
 C:\kai\PERL\Workflow-Wfmc-0.01>perl t\Workflow-Wfmc.t -t "PO"
 1..2
 ok 1 - use Workflow::Wfmc;
-The starting ativity ID is 1
+The starting activity ID is 1
 
 Implementation step
 Tue Jul 12 08:40:56 2005: Entering sub checkData
@@ -41,7 +124,7 @@ EXAMPLE 2: CREDIT
 C:\kai\PERL\Workflow-Wfmc-0.01>perl t\Workflow-Wfmc.t -t "Credit"
 1..2
 ok 1 - use Workflow::Wfmc;
-The starting ativity ID is 1
+The starting activity ID is 1
 
 Implementation step
 Tue Jul 12 08:41:21 2005: Entering sub checkData
